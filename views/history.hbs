@@ -1,0 +1,29 @@
+<center>
+  <h1>Bandwidth Data</h1>
+  <div id="div_g" style="width:95%; height:80%;"></div>
+  <img id="outImg" \>
+</center>
+<script>
+  String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+  };
+  // var img = document.getElementById('outImg');
+  logData = "{{m}}";
+  logData = logData.replaceAll("---","\n");
+
+  var graph = new Dygraph(document.getElementById("div_g"), logData,
+  {
+    drawPoints: true,
+    valueRange: [0, 40],
+    labels: ['Time', 'Ping', 'Download', 'Upload'],
+    colors: ["rgb(51,204,204)","#00DD55","rgb(255,100,100)","rgba(50,50,200,0.4)"],
+    file: logData,
+    rollPeriod: 4,
+    animatedZooms: true,
+    legend: 'always',
+    ylabel: 'MBit / s',
+    labelsDivStyles: { 'textAlign': 'right' }
+  });
+  // Dygraph.Export.asPNG(graph, img);
+</script>

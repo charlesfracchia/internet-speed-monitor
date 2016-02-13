@@ -1,0 +1,31 @@
+{
+  "name": "internet-speed-monitor",
+  "version": "1.0.0",
+  "description": "Internet speed monitor in Node.js with visualizer",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/charlesfracchia/internet-speed-monitor.git"
+  },
+  "keywords": [
+    "internet",
+    "monitor",
+    "bandwidth",
+    "nodejs"
+  ],
+  "author": "Charles Fracchia <charlesfracchia@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/charlesfracchia/internet-speed-monitor/issues"
+  },
+  "homepage": "https://github.com/charlesfracchia/internet-speed-monitor#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "express-handlebars": "^3.0.0",
+    "moment": "^2.11.2"
+  }
+}
