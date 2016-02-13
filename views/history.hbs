@@ -2,6 +2,9 @@
   <h1>Bandwidth Data</h1>
   <div id="div_g" style="width:95%; height:80%;"></div>
   <img id="outImg" \>
+  <button id="btnPing">Ping</button>
+  <button id="btnDownload">Download</button>
+  <button id="btnUpload">Upload</button>
 </center>
 <script>
   String.prototype.replaceAll = function(search, replacement) {
@@ -25,9 +28,7 @@
     legend: 'always',
     ylabel: 'MBit / s',
     labelsDivStyles: { 'textAlign': 'right' },
-    xValueFormatter: Dygraph.dateString_,
     xValueParser: function(x) { return 1000*parseInt(x); },
-    xTicker: Dygraph.dateTicker,
     axes: {
       y2: {
         valueRange: [0, 40]
@@ -38,4 +39,26 @@
     }
   });
   // Dygraph.Export.asPNG(graph, img);
+  document.addEventListener("DOMContentLoaded", function(event) {
+    function getAllSeries(graph) {
+      return graph.getLabels().slice(1,graph.getLabels().length);
+    }
+    function getSeriesIndex(graph,seriesLabel) {
+      return getAllSeries(graph).indexOf(seriesLabel);
+    }
+    function toggleVisibility(graph, series) {
+      var allSeries = getAllSeries(graph);
+      var vis = graph.getPropertiesForSeries(series).visible;
+      graph.setVisibility(getSeriesIndex(graph, series),!vis);
+    }
+    document.getElementById("btnPing").addEventListener("click",
+      function(){ toggleVisibility(graph, 'Ping') }
+    );
+    document.getElementById("btnDownload").addEventListener("click",
+      function(){ toggleVisibility(graph, 'Download') }
+    );
+    document.getElementById("btnUpload").addEventListener("click",
+      function(){ toggleVisibility(graph, 'Upload') }
+    );
+  });
 </script>
