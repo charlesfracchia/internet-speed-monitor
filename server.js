@@ -8,7 +8,7 @@ app.engine('.hbs', exphbs({defaultLayout: 'main', extname: '.hbs'}));
 app.set('view engine', '.hbs');
 
 app.get('/', function (req, res) {
-  fs.readFile('bandwidthLog.txt', 'utf8', function (err,data) {
+  fs.readFile('internet_speed.txt', 'utf8', function (err,data) {
     if (err) { res.send("Error reading the file: "+err); }
     data = data.replaceAll("\n","---");
     console.log(">>> Read "+data.length+" data points");
