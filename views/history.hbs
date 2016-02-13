@@ -20,10 +20,22 @@
     colors: ["rgb(51,204,204)","#00DD55","rgb(255,100,100)","rgba(50,50,200,0.4)"],
     file: logData,
     rollPeriod: 4,
+    showRoller: true,
     animatedZooms: true,
     legend: 'always',
     ylabel: 'MBit / s',
-    labelsDivStyles: { 'textAlign': 'right' }
+    labelsDivStyles: { 'textAlign': 'right' },
+    xValueFormatter: Dygraph.dateString_,
+    xValueParser: function(x) { return 1000*parseInt(x); },
+    xTicker: Dygraph.dateTicker,
+    axes: {
+      y2: {
+        valueRange: [0, 40]
+      }
+    },
+    series: {
+      "Ping": { axis: 'y2' }
+    }
   });
   // Dygraph.Export.asPNG(graph, img);
 </script>
