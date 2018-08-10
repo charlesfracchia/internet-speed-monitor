@@ -18,15 +18,15 @@
   var graph = new Dygraph(document.getElementById("div_g"), logData,
   {
     drawPoints: true,
-    valueRange: [0, 40],
+    valueRange: [0, 200],
     labels: ['Time', 'Ping', 'Download', 'Upload'],
     colors: ["rgb(51,204,204)","#00DD55","rgb(255,100,100)","rgba(50,50,200,0.4)"],
     file: logData,
-    rollPeriod: 4,
+    rollPeriod: 100,
     showRoller: true,
     animatedZooms: true,
     legend: 'always',
-    ylabel: 'MBit / s',
+    ylabel: 'Mbit / s',
     labelsDivStyles: { 'textAlign': 'right' },
     xValueParser: function(x) { return 1000*parseInt(x); },
     axes: {
