@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "setup": "echo 'Server ID, Sponsor, Server Name, Timestamp, Distance, Ping, Download, Upload, Share, IP Address' > internet_log.csv"
   },
   "repository": {
     "type": "git",
@@ -24,8 +25,9 @@
   },
   "homepage": "https://github.com/charlesfracchia/internet-speed-monitor#readme",
   "dependencies": {
+    "csv-parser": "^3.0.0",
+    "csv-writer": "^1.6.0",
     "express": "^4.13.4",
-    "express-handlebars": "^3.0.0",
-    "moment": "^2.11.2"
+    "express-handlebars": "^3.0.0"
   }
 }

@@ -7,19 +7,14 @@
   <button id="btnUpload">Upload</button>
 </center>
 <script>
-  String.prototype.replaceAll = function(search, replacement) {
-    var target = this;
-    return target.replace(new RegExp(search, 'g'), replacement);
-  };
   // var img = document.getElementById('outImg');
   logData = "{{m}}";
-  logData = logData.replaceAll("---","\n");
+  logData = logData.replace(/---/g,"\n");
 
   var graph = new Dygraph(document.getElementById("div_g"), logData,
   {
     drawPoints: true,
-    valueRange: [0, 200],
-    labels: ['Time', 'Ping', 'Download', 'Upload'],
+    valueRange: [0, 400],
     colors: ["rgb(51,204,204)","#00DD55","rgb(255,100,100)","rgba(50,50,200,0.4)"],
     file: logData,
     rollPeriod: 100,
@@ -28,10 +23,9 @@
     legend: 'always',
     ylabel: 'Mbit / s',
     labelsDivStyles: { 'textAlign': 'right' },
-    xValueParser: function(x) { return 1000*parseInt(x); },
     axes: {
       y2: {
-        valueRange: [0, 40]
+        valueRange: [0, 65]
       }
     },
     series: {
