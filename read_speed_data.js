@@ -2,10 +2,6 @@ const createCsvStringifier = require('csv-writer').createObjectCsvStringifier;
 const csv = require('csv-parser');
 const fs = require('fs');
 
-const inputFile = 'internet_log.csv';
-
-const inputCSVJSON = [];
-
 const csvStringifier = createCsvStringifier({
   header: [
       {id: 'Timestamp', title: 'Time'},
@@ -17,6 +13,7 @@ const csvStringifier = createCsvStringifier({
 
 function parseCSV(inputFile) {
   return new Promise((resolve, reject) => {
+    const inputCSVJSON = [];
     fs.createReadStream(inputFile)
     .pipe(csv())
     .on('data', (data) => inputCSVJSON.push(data))
@@ -24,6 +21,7 @@ function parseCSV(inputFile) {
       let transformedData = await transformData(inputCSVJSON);
       data_yep = await outputModifiedCSV(transformedData);
       resolve(data_yep);
+      return data_yep;
     });
   })
 }
@@ -54,8 +52,6 @@ function outputModifiedCSV(modifiedCSVJSON) {
   });
 }
 
-module.exports = (async function() {
-  const data = await parseCSV(inputFile);
-  // console.log(data);
-  return{ data };
-})();
+module.exports = {
+  parseCSV
+}
