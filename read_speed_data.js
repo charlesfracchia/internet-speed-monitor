@@ -13,15 +13,30 @@ const csvStringifier = createCsvStringifier({
 
 function parseCSV(inputFile) {
   return new Promise((resolve, reject) => {
+    
+    let parse_errors = 0;
+    let transformedData = [];
     const inputCSVJSON = [];
+
     fs.createReadStream(inputFile)
     .pipe(csv())
-    .on('data', (data) => inputCSVJSON.push(data))
+    .on('error', function (err) {
+      console.log("Detected error: " + err.message)
+    })
+    .on('data', async (data) => {
+      if ((data['Server ID'].indexOf('ERROR') != -1) || (data['Server ID'].indexOf('Cannot retrieve') != -1)){
+        parse_errors = parse_errors + 1
+      }else{
+        inputCSVJSON.push(data)
+        let transformedRow = await transformRow(data)
+        transformedData.push(transformedRow)
+      }
+    })
     .on('end', async () => {
-      let transformedData = await transformData(inputCSVJSON);
-      data_yep = await outputModifiedCSV(transformedData);
-      resolve(data_yep);
-      return data_yep;
+      completed_data = await outputModifiedCSV(transformedData);
+      console.log("--- Found "+parse_errors+" errors in the CSV log")
+      resolve(completed_data);
+      return completed_data;
     });
   })
 }
@@ -36,10 +51,14 @@ function transformData(inputCSVtoTransform){
 
 function transformRow(row) {
   return new Promise((resolve, reject) => {
-    row.Timestamp = row.Timestamp.replace(/-/g,"/").replace("T"," ").slice(0,-8);
-    row.Ping = Math.round(row.Ping);
-    row.Download = Math.round(row.Download/1000000);
-    row.Upload = Math.round(row.Upload/1000000);
+    try {
+      row.Timestamp = row.Timestamp.replace(/-/g,"/").replace("T"," ").slice(0,-8);
+      row.Ping = Math.round(row.Ping);
+      row.Download = Math.round(row.Download/1000000);
+      row.Upload = Math.round(row.Upload/1000000);
+    } catch (error) {
+      console.log(row)
+    }
     // row.Distance = row.Distance; //for conversion TODO
     // console.log("---");
     resolve(row);
