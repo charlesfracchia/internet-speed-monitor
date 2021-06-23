@@ -6,6 +6,7 @@ app.use(express.static(__dirname + '/server'));
 app.engine('.hbs', exphbs({defaultLayout: 'main', extname: '.hbs'}));
 app.set('view engine', '.hbs');
 
+const port = 12345;
 const dataHelper = require('./read_speed_data');
 
 app.get('/', function (req, res) {
@@ -22,6 +23,6 @@ app.get('/', function (req, res) {
   })();
 });
 
-app.listen(12345, function () {
-  console.log('Example app listening on port 12345!');
+app.listen(port, function () {
+  console.log('Server running on port '+port);
 });
