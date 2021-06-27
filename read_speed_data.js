@@ -33,7 +33,7 @@ function parseCSV(inputFile, getRaw=false) {
       }
     })
     .on('end', async () => {
-      console.log("--- Found "+parse_errors+" errors in the CSV log")
+      console.log("--- Found "+parse_errors.toLocaleString('en')+" errors in the CSV log")
       if (getRaw) {
         resolve(inputCSVJSON);
         return inputCSVJSON;

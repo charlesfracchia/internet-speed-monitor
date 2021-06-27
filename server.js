@@ -17,7 +17,7 @@ app.get('/', function (req, res) {
 
     let measurements = (data_for_frontend.match(/---/g) || []).length-1;
     let last_date = speed_data.trim().split("\n").slice(-1)[0].split(",")[0];
-    console.log(">>> Read "+measurements+" data points. Latest data from: "+last_date);
+    console.log(">>> Read "+measurements.toLocaleString('en')+" data points. Latest data from: "+last_date);
 
     var context = { m : data_for_frontend };
     res.render('history',context);
