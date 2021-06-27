@@ -11,7 +11,7 @@ const csvStringifier = createCsvStringifier({
   ]
 });
 
-function parseCSV(inputFile) {
+function parseCSV(inputFile, getRaw=false) {
   return new Promise((resolve, reject) => {
     
     let parse_errors = 0;
@@ -33,10 +33,16 @@ function parseCSV(inputFile) {
       }
     })
     .on('end', async () => {
-      completed_data = await outputModifiedCSV(transformedData);
       console.log("--- Found "+parse_errors+" errors in the CSV log")
-      resolve(completed_data);
-      return completed_data;
+      if (getRaw) {
+        resolve(inputCSVJSON);
+        return inputCSVJSON;
+      }else{
+        completed_data = await outputModifiedCSV(transformedData);
+        resolve(completed_data);
+        return completed_data;
+      }
+      
     });
   })
 }
